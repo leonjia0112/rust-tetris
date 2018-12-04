@@ -1,0 +1,6 @@
+[package]
+name = "rust-tetris"
+version = "0.1.0"
+authors = ["ljia <leojia@bu.edu>"]
+
+[dependencies]
