@@ -9,6 +9,31 @@ use sdl2::render::{Texture, TextureCreator};
 
 use std::time::Duration;
 use std::thread::sleep;
+use sdl2::video::{Window, WindowContext};
+
+#[derive(Clone, Copy)]
+enum TextureColor{
+	Green,
+	Blue,
+}
+
+fn create_texture_rect<'a>(canvas: &mut Canvas<Window>, 
+	texture_creator: &'a TextureCreator<WindowContext>, 
+	color: TextureColor, size:u32) -> Option<Texture<'a>> {
+	if let Ok(mut square_texture) = texture_creator.create_texture_target(None, size, size) {
+		canvas.with_texture_canvas(&mut square_texture, |texture| {
+			match color {
+				TexutreColor::Green => texture.set_draw_color(Color::RGB(0, 255, 0)),
+				TextureColor::Blue => texture.set_draw_color(Color::RGB(0, 0, 255)),
+			}
+			texture.clear();
+		}).expect("Failed to color a texture");
+		Some(square_texture)
+	} else {
+		None
+	}
+}
+
 
 pub fn main() {
 	// Initialize sdl context so it is running
@@ -60,7 +85,7 @@ pub fn main() {
 			}
 		}
 
-		canvas.set_draw_color(Color::RGB(255, 0, 0));
+		canvas.set_draw_color(Color::RGB(0, 0, 255));
 		canvas.clear();
 
 		canvas.copy(
