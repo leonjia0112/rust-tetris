@@ -243,6 +243,15 @@ fn create_new_tetrimino() -> Tetrimino {
 	}
 }
 
+impl Tetrimino {
+	fn rotate(&mut self) {
+		self.current_state += 1;
+		if self.current_state as usize >= self.states.len() {
+			self.current_state = 0;
+		}
+	}
+}
+
 pub fn main() {
 	// Initialize sdl context so it is running
 	let sdl_context = sdl2::init().expect("SDL initialization fail");
