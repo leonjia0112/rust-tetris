@@ -244,10 +244,18 @@ fn create_new_tetrimino() -> Tetrimino {
 }
 
 impl Tetrimino {
-	fn rotate(&mut self) {
-		self.current_state += 1;
-		if self.current_state as usize >= self.states.len() {
-			self.current_state = 0;
+	fn rotate(&mut self, game_map: &[Vec<u8>]) {
+		let mut tmp_state = self.current_state + 1;
+		if tmp_state as usize >=self.states.len() {
+			tmp_state = 0;
+		}
+		let x_pos  = [0, -1, 1, -2, 2, -3];
+		for x in x_pos.iter() {
+			if self.test_postion(game_map, tmp_state as usize, self.x + x, self.y) {
+				self.current_state = tmp_state;
+				self.x += *x;
+				break;
+			}
 		}
 	}
 
